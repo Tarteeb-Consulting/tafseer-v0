@@ -21,9 +21,10 @@ function renderSurahs(surahs) {
 
     container.innerHTML = '';
 
-    surahs.forEach(surah => {
+    surahs.forEach((surah, index) => {
         const card = document.createElement('div');
         card.className = 'surah-card';
+        card.style.transitionDelay = `${(index % 10) * 0.05}s`;
         card.innerHTML = `
             <div class="surah-info">
                 <h3>${surah.number}. ${surah.englishName}</h3>
@@ -33,6 +34,11 @@ function renderSurahs(surahs) {
         `;
         card.onclick = () => openSurahDetail(surah.number);
         container.appendChild(card);
+        
+        // Trigger animation after append
+        requestAnimationFrame(() => {
+            card.classList.add('show');
+        });
     });
 }
 
@@ -44,12 +50,12 @@ async function openSurahDetail(number) {
     // Show detail page, hide home
     homePage.classList.remove('active');
     detailPage.classList.add('active');
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     content.innerHTML = `
         <div class="loader-container">
             <div class="spinner"></div>
-            <p>Loading Surah and Tafseer...</p>
+            <p>Gathering Knowledge...</p>
         </div>
     `;
 
@@ -66,7 +72,7 @@ async function openSurahDetail(number) {
         renderDetail(surahData.data, tafseerData.data);
     } catch (error) {
         console.error('Error fetching detail:', error);
-        content.innerHTML = '<p class="error">Failed to load detail. Please try again.</p>';
+        content.innerHTML = '<p class="error">The knowledge could not be retrieved. Please try again.</p>';
     }
 }
 
@@ -89,7 +95,7 @@ function renderDetail(surah, tafseer) {
 
     content.innerHTML = `
         <div class="surah-header">
-            <p>Surah ${surah.number}</p>
+            <p>Chapter ${surah.number}</p>
             <h1>${surah.name}</h1>
             <h2>${surah.englishName}</h2>
             <p>${surah.englishNameTranslation} • ${surah.numberOfAyahs} Ayahs</p>
@@ -105,31 +111,42 @@ function setupEventListeners() {
     document.getElementById('back-btn').onclick = () => {
         document.getElementById('detail-page').classList.remove('active');
         document.getElementById('home-page').classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    // Search functionality
+    // Search functionality with debounce
+    let timeout;
     const searchInput = document.getElementById('quran-search');
     searchInput.oninput = (e) => {
-        const query = e.target.value.toLowerCase();
-        const filtered = allSurahs.filter(s => 
-            s.englishName.toLowerCase().includes(query) || 
-            s.name.includes(query) ||
-            s.number.toString() === query
-        );
-        renderSurahs(filtered);
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allSurahs.filter(s => 
+                s.englishName.toLowerCase().includes(query) || 
+                s.name.includes(query) ||
+                s.number.toString() === query
+            );
+            renderSurahs(filtered);
+        }, 300);
     };
 
-    // Simple scroll effect for navbar
+    // Advanced Navbar Effect
     window.addEventListener('scroll', () => {
         const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-            navbar.style.boxShadow = 'var(--shadow)';
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
         } else {
-            navbar.style.background = 'rgba(255, 255, 255, 0.8)';
-            navbar.style.boxShadow = 'none';
+            navbar.classList.remove('scrolled');
         }
     });
+
+    // Logo click to home
+    document.querySelector('.logo').onclick = () => {
+        document.getElementById('detail-page').classList.remove('active');
+        document.getElementById('home-page').classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        renderSurahs(allSurahs);
+    };
 }
 
 document.addEventListener('DOMContentLoaded', () => {
