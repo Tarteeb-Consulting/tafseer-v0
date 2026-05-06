@@ -1,0 +1,25 @@
+{
+  "name": "tafseer-v0",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tarteeb-Consulting/tafseer-v0.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tarteeb-Consulting/tafseer-v0/issues"
+  },
+  "homepage": "https://github.com/Tarteeb-Consulting/tafseer-v0#readme",
+  "dependencies": {
+    "vite": "^8.0.10"
+  }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tafseer v0 - Explore the Holy Quran</title>
+    <meta name="description" content="A premium platform for understanding the Tafseer and meanings of the Holy Quran.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="arabic">التفسير</span>
+                <span class="latin">Tafseer v0</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#surahs">Surahs</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+            <div class="actions">
+                <button id="theme-toggle" aria-label="Toggle dark mode">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-overlay"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Explore the Divine Wisdom</h1>
+                    <p>Deep dive into the meanings of the Holy Quran with authentic Tafseer sources.</p>
+                    <div class="search-container">
+                        <input type="text" placeholder="Search Surah, Ayah or Topic..." id="quran-search">
+                        <button type="submit">Search</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="surahs" class="surah-grid-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Popular Surahs</h2>
+                    <p>Quick access to the most frequently read chapters.</p>
+                </div>
+                <div class="surah-grid" id="surah-container">
+                    <!-- Surah cards will be injected here -->
+                    <div class="loader">Loading...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Tafseer v0 - Tarteeb Consulting Project</p>
+        </div>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
